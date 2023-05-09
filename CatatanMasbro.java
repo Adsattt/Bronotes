@@ -21,12 +21,12 @@ class Catatan {
     }
 }
 
-class MaxHeap {
+class MinHeap {
     private Catatan[] Heap;
     private int size;
     private int maxsize;
 
-    public MaxHeap(int maxsize)
+    public MinHeap(int maxsize)
     {
         this.maxsize = maxsize;
         this.size = 0;
@@ -55,7 +55,7 @@ class MaxHeap {
         Heap[spos] = tmp;
     }
 
-    private void maxHeapify(int pos)
+    private void MinHeapify(int pos)
     {
         if (isLeaf(pos))
             return;
@@ -66,11 +66,11 @@ class MaxHeap {
             if (Heap[leftChild(pos)].getTanggal()
                 > Heap[rightChild(pos)].getTanggal()) {
                 swap(pos, leftChild(pos));
-                maxHeapify(leftChild(pos));
+                MinHeapify(leftChild(pos));
             }
             else {
                 swap(pos, rightChild(pos));
-                maxHeapify(rightChild(pos));
+                MinHeapify(rightChild(pos));
             }
         }
     }
@@ -79,7 +79,7 @@ class MaxHeap {
     {
         Catatan popped = Heap[0];
         Heap[0] = Heap[--size];
-        maxHeapify(0);
+        MinHeapify(0);
         return popped;
     }
 
@@ -108,8 +108,8 @@ class MaxHeap {
 }
 
 class Fungsi {
-    MaxHeap h;
-    public Fungsi(MaxHeap h){
+    MinHeap h;
+    public Fungsi(MinHeap h){
         this.h = h;
     }
 
@@ -163,7 +163,7 @@ class Fungsi {
         System.out.println("Tanggal(yymmdd): " + tmp.getTanggal() + " Catatan: " + tmp.getCatatan());
     }
 
-    public MaxHeap getMaxHeap(){
+    public MinHeap getMinHeap(){
         return h;
     }
 
@@ -175,7 +175,7 @@ public class CatatanMasbro {
         Scanner sc = new Scanner(System.in);
         int size = 50, command, exit, tanggal;
         String catatan;
-        MaxHeap heap = new MaxHeap(size);
+        MinHeap heap = new MinHeap(size);
         Fungsi f = new Fungsi(heap);
         
         f.start();
@@ -192,7 +192,7 @@ public class CatatanMasbro {
                     f.input13(note);
                 case 2:
                     f.input2();
-                    MaxHeap temp = f.getMaxHeap();
+                    MinHeap temp = f.getMinHeap();
                     temp.print();
                 case 3:
                     f.input3();
