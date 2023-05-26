@@ -1,3 +1,4 @@
+package DataStructure;
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -37,8 +38,8 @@ public class TaskVector<E> implements Iterable {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
+        E removed = (E) elements[index];
         System.arraycopy(elements, index + 1, elements, index, size - index - 1);
-        E removed = (E) elements[--size];
         elements[--size] = null;
         return removed;
     }

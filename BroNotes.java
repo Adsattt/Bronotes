@@ -2,6 +2,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.time.temporal.ChronoUnit;
+
+import DataStructure.TaskHashTable;
+import DataStructure.TaskVector;
+
 
 public class BroNotes {
     private static class Task {
@@ -38,15 +43,22 @@ public class BroNotes {
         public void setDeadline(LocalDate deadline) {
             this.deadline = deadline;
         }
+
+        public int getDaysUntilDeadline() {
+            LocalDate today = LocalDate.now();
+            return (int) ChronoUnit.DAYS.between(today, deadline);
+        }
     }
     
     private static class TaskManager {
         private TaskHashTable<String, TaskVector<Task>> taskMap;
         private String currentUser;
+        private LocalDate now;
 
         public TaskManager() {
             taskMap = new TaskHashTable<String, TaskVector<Task>>(97);
             currentUser = null;
+            now = LocalDate.now();
         }
 
         public void registerUser(String username) {
@@ -172,6 +184,7 @@ public class BroNotes {
                     System.out.println("Task: " + task.getNama());
                     System.out.println("Catatan: " + task.getCatatan());
                     System.out.println("Deadline: " + task.getDeadline());
+                    System.out.println("Reminder: " + task.getDaysUntilDeadline() + " hari menuju deadline");
                     System.out.println();
                 }
             }

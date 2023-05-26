@@ -1,3 +1,4 @@
+package DataStructure;
 public class TaskHashTable<K, V> {
     private Entry<K, V>[] buckets;
     private int capacity;
