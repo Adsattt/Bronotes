@@ -21,23 +21,14 @@ public class TaskVector<E> implements Iterable {
     
     @SuppressWarnings("unchecked")
     public E get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
         return (E) elements[index];
     }
 
     public void set(int index, E element) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
         elements[index] = element;
     }
     
     public E remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
         E removed = (E) elements[index];
         System.arraycopy(elements, index + 1, elements, index, size - index - 1);
         elements[--size] = null;

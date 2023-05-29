@@ -51,22 +51,20 @@ public class BroNotes {
     }
     
     private static class TaskManager {
-        private TaskHashTable<String, TaskVector<Task>> taskMap;
+        private TaskHashTable<String, TaskVector<Task>> taskHashTable;
         private String currentUser;
-        private LocalDate now;
 
         public TaskManager() {
-            taskMap = new TaskHashTable<String, TaskVector<Task>>(97);
+            taskHashTable = new TaskHashTable<String, TaskVector<Task>>(97);
             currentUser = null;
-            now = LocalDate.now();
         }
 
         public void registerUser(String username) {
-            taskMap.put(username, new TaskVector<>());
+            taskHashTable.put(username, new TaskVector<>());
         }
 
         public void loginUser(String username) {
-            if (taskMap.containsKey(username)) {
+            if (taskHashTable.containsKey(username)) {
                 currentUser = username;
                 System.out.println("Selamat datang, " + currentUser + "!");
             } else {
@@ -84,13 +82,13 @@ public class BroNotes {
         }
 
         public void addTask(Task task) {
-            TaskVector<Task> taskList = taskMap.get(currentUser);
+            TaskVector<Task> taskList = taskHashTable.get(currentUser);
             taskList.add(task);
             System.out.println("Task berhasil ditambahkan.");
         }
 
         public void removeTask(int index) {
-            TaskVector<Task> taskList = taskMap.get(currentUser);
+            TaskVector<Task> taskList = taskHashTable.get(currentUser);
             if (index >= 0 && index < taskList.size()) {
                 Task removedTask = taskList.remove(index);
                 System.out.println("Task berhasil dihapus:");
@@ -102,8 +100,9 @@ public class BroNotes {
             }
         }
 
-        public void editTask(int index, String newName, String newCatatan, LocalDate newDeadline) {
-            TaskVector<Task> taskList = taskMap.get(currentUser);
+        public void editTask(int index, String newName, String newCatatan, 
+                            LocalDate newDeadline) {
+            TaskVector<Task> taskList = taskHashTable.get(currentUser);
             if (index >= 0 && index < taskList.size()) {
                 Task task = taskList.get(index);
                 task.setNama(newName);
@@ -116,7 +115,7 @@ public class BroNotes {
         }
 
         public void searchTaskByName(String name) {
-            TaskVector<Task> taskList = taskMap.get(currentUser);
+            TaskVector<Task> taskList = taskHashTable.get(currentUser);
             boolean found = false;
             for (Object temp : taskList) {
                 Task task = (Task) temp;
@@ -134,7 +133,7 @@ public class BroNotes {
         }
 
         public void searchTaskByDeadline(LocalDate deadline) {
-            TaskVector<Task> taskList = taskMap.get(currentUser);
+            TaskVector<Task> taskList = taskHashTable.get(currentUser);
             boolean found = false;
             for (Object temp : taskList) {
                 Task task = (Task) temp;
@@ -152,13 +151,13 @@ public class BroNotes {
         }
 
         public void sortTasksByDeadline() {
-            TaskVector<Task> taskList = taskMap.get(currentUser);
+            TaskVector<Task> taskList = taskHashTable.get(currentUser);
             taskList.sort((t1, t2) -> t1.getDeadline().compareTo(t2.getDeadline()));
             System.out.println("Daftar task berhasil diurutkan berdasarkan deadline.");
         }
 
         public void exportTasksToTxt(String filename) throws IOException {
-            TaskVector<Task> taskList = taskMap.get(currentUser);
+            TaskVector<Task> taskList = taskHashTable.get(currentUser);
             PrintWriter output = new PrintWriter(filename + ".txt");
 
             for (Object temp : taskList) {
@@ -173,7 +172,7 @@ public class BroNotes {
         }
 
         public void displayTasks() {
-            TaskVector<Task> taskList = taskMap.get(currentUser);
+            TaskVector<Task> taskList = taskHashTable.get(currentUser);
             if (taskList.isEmpty()) {
                 System.out.println("Tidak ada task yang tersedia.");
             } else {
@@ -184,7 +183,8 @@ public class BroNotes {
                     System.out.println("Task: " + task.getNama());
                     System.out.println("Catatan: " + task.getCatatan());
                     System.out.println("Deadline: " + task.getDeadline());
-                    System.out.println("Reminder: " + task.getDaysUntilDeadline() + " hari menuju deadline");
+                    System.out.println("Reminder: " + task.getDaysUntilDeadline() 
+                    + " hari menuju deadline");
                     System.out.println();
                 }
             }
