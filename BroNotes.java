@@ -124,6 +124,8 @@ public class BroNotes {
                     System.out.println("Task: " + task.getNama());
                     System.out.println("Catatan: " + task.getCatatan());
                     System.out.println("Deadline: " + task.getDeadline());
+                    System.out.println("Reminder: " + task.getDaysUntilDeadline() 
+                    + " hari menuju deadline");
                     found = true;
                 }
             }
@@ -142,6 +144,8 @@ public class BroNotes {
                     System.out.println("Task: " + task.getNama());
                     System.out.println("Catatan: " + task.getCatatan());
                     System.out.println("Deadline: " + task.getDeadline());
+                    System.out.println("Reminder: " + task.getDaysUntilDeadline() 
+                    + " hari menuju deadline");
                     found = true;
                 }
             }
