@@ -163,12 +163,16 @@ public class BroNotes {
         public void exportTasksToTxt(String filename) throws IOException {
             TaskVector<Task> taskList = taskHashTable.get(currentUser);
             PrintWriter output = new PrintWriter(filename + ".txt");
-
+            output.println("BroNotes milik " + currentUser);
+            output.println("Dibuat tanggal: " + LocalDate.now());
+            output.println();
             for (Object temp : taskList) {
                 Task task = (Task) temp;
                 output.println("Task: " + task.getNama());
                 output.println("Catatan: " + task.getCatatan());
                 output.println("Deadline: " + task.getDeadline());
+                output.println("Reminder: " + task.getDaysUntilDeadline() 
+                + " hari menuju deadline");
                 output.println();
             }
             output.close();
